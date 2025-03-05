@@ -31,18 +31,10 @@
     {
       "name": "Feature Icons",
       "blocks": [
-        {
-          "type": "feature"
-        },
-        {
-          "type": "feature"
-        },
-        {
-          "type": "feature"
-        },
-        {
-          "type": "feature"
-        }
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
       ]
     }
   ]
@@ -55,7 +47,7 @@
       <div class="feature-item">
         {% if block.settings.icon %}
           <div class="feature-icon">
-            <img src="{{ block.settings.icon | img_url: '100x' }}" alt="{{ block.settings.title }}">
+            <img src="{{ block.settings.icon | img_url: '150x' }}" alt="{{ block.settings.title }}">
           </div>
         {% endif %}
         <h3 class="feature-title">{{ block.settings.title }}</h3>
@@ -69,6 +61,7 @@
   .features-container {
     width: 100%;
     padding: 40px 20px;
+    overflow: hidden;
   }
 
   .features-slider {
@@ -112,6 +105,12 @@
       max-width: 100%;
     }
   }
+
+  /* Hide default flickity buttons */
+  .flickity-prev-next-button {
+    background: none !important;
+  }
+
 </style>
 
 <script>
