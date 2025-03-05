@@ -1,0 +1,139 @@
+{% schema %}
+{
+  "name": "Feature Icons",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Feature Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Feature description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Icons",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="features-container">
+  <div class="features-slider">
+    {% for block in section.blocks %}
+      <div class="feature-item">
+        {% if block.settings.icon %}
+          <div class="feature-icon">
+            <img src="{{ block.settings.icon | img_url: '100x' }}" alt="{{ block.settings.title }}">
+          </div>
+        {% endif %}
+        <h3 class="feature-title">{{ block.settings.title }}</h3>
+        <p class="feature-description">{{ block.settings.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .features-container {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .features-slider {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .feature-item {
+    text-align: center;
+    max-width: 250px;
+    flex: 1 1 22%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .feature-icon img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .feature-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .feature-description {
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  @media (max-width: 768px) {
+    .features-slider {
+      display: block;
+    }
+
+    .feature-item {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const featureSlider = document.querySelector('.features-slider');
+    if (featureSlider) {
+      let items = featureSlider.children.length;
+      if (items > 4 || window.innerWidth < 768) {
+        featureSlider.classList.add("enable-slider");
+        let flickityScript = document.createElement("script");
+        flickityScript.src = "https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js";
+        flickityScript.onload = function() {
+          new Flickity('.features-slider', {
+            cellAlign: 'center',
+            contain: true,
+            pageDots: false,
+            prevNextButtons: true,
+            groupCells: window.innerWidth > 768 ? 4 : 1
+          });
+        };
+        document.body.appendChild(flickityScript);
+      }
+    }
+  });
+</script>
